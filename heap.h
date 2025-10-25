@@ -46,7 +46,8 @@ struct MinHeap {
 
     void downheap(int pos, int weightArr[]) {
         while (true) {
-            int left = 2 * pos + 1, right =2* pos + 2;
+            int left = 2 * pos + 1,
+            right =2* pos + 2;
             if (left>=size)break;
             int smallest = left;
             if (right < size && weightArr[data [right]] < weightArr [data[left]])
