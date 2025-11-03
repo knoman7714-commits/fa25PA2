@@ -48,7 +48,7 @@ int main() {
     Function Definitions (Students will complete logic)
   ------------------------------------------------------*/
 
-// Step 1: Read file and count frequencies
+// count letter of frequencies from file
 void buildFrequencyTable(int freq[], const string& filename) {
     ifstream file(filename);
     if (!file.is_open()) {
@@ -70,8 +70,7 @@ void buildFrequencyTable(int freq[], const string& filename) {
 
     cout << "Frequency table built successfully.\n";
 }
-
-// Step 2: Create leaf nodes for each character
+// make leaf nodes for characters to show up
 int createLeafNodes(int freq[]) {
     int nextFree = 0;
     for (int i = 0; i < 26; ++i) {
@@ -87,7 +86,7 @@ int createLeafNodes(int freq[]) {
     return nextFree;
 }
 
-// Step 3: Build the encoding tree using heap operations
+// creates encoding tree with min heap
 int buildEncodingTree(int nextFree) {
     if (nextFree == 0 )return -1;
     if (nextFree == 1)return 0;
@@ -114,7 +113,8 @@ int buildEncodingTree(int nextFree) {
     return h.pop(weightArr);
 }
 
-// Step 4: Use an STL stack to generate codes
+//creates binary code repeatedly using a stack
+//each leaf char gets a binary string
 void generateCodes(int root, string codes[]) {
     for (int i = 0; i < 26; ++i) codes[i].clear();
     if (root < 0) return;
