@@ -89,17 +89,22 @@ int createLeafNodes(int freq[]) {
 
 // Step 3: Build the encoding tree using heap operations
 int buildEncodingTree(int nextFree) {
+    if (nextFree == 0 )return -1;
+    if (nextFree == 1)return 0;
   MinHeap h;
 
     for (int i = 0; i < nextFree; ++i) {
-        h.push(weightArr [i],weightArr);
+        h.push(i,weightArr);
     }
     int cur = nextFree;
     while (h.size > 1) {
         int a =h.pop(weightArr);
         int b = h.pop(weightArr);
-        if (cur >=MAX_NODES)break;
-        weightArr[cur] = a + b;
+        if (cur >=MAX_NODES) {
+            cerr << "Node " << cur << " exceeds MAX_NODES\n";
+            exit(1);
+        }
+        weightArr[cur] = weightArr[a] + weightArr[b];
         leftArr[cur] = a;
         rightArr[cur] = b;
         charArr[cur] = '#';
@@ -119,15 +124,15 @@ void generateCodes(int root, string codes[]) {
     while (!st.empty()) {
         Frame f = st.top();st.pop();
         int n = f.node;
-        bool isLeaf; - (leftArr[n] ==-1 && rightArr[n]==-1);
+        bool isLeaf = (leftArr[n] ==-1 && rightArr[n]==-1);
         if (isLeaf) {
             char ch = charArr[n];
             if (ch >= 'a' && ch <= 'z') {
-                codes [ ch - 'a'] = f.path;
+                codes [ ch - 'a'] = f.path.empty()? "0" : f.path;
             }
         } else {
-            if (rightArr[n] != -0) st.push ({rightArr[n],f.path +"1"});
-            if (leftArr [n] != 0) st.push ({leftArr[n],f.path +"0"});
+            if (rightArr[n] != -1) st.push ({rightArr[n],f.path +"1"});
+            if (leftArr [n] != -1) st.push ({leftArr[n],f.path +"0"});
         }
     }
 }
